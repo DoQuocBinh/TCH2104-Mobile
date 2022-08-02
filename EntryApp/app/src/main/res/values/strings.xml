@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">EntryApp</string>
+    <string name="ok_button">OK!</string>
+    <string name="password">Password</string>
+</resources>
