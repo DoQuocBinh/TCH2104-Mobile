@@ -40,6 +40,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button btn4 = findViewById(R.id.button4);
+        btn4.setOnClickListener(view -> {
+            DatabaseHelper dbHelper = new DatabaseHelper(MainActivity.this);
+
+            EditText nameEditText = findViewById(R.id.name);
+            String name = nameEditText.getText().toString();
+            EditText emailEditText = findViewById(R.id.email);
+            String email = emailEditText.getText().toString();
+            EditText dobEditText = findViewById(R.id.dob);
+            String dob = dobEditText.getText().toString();
+            dbHelper.insertDetails(name,dob,email);
+            Toast.makeText(MainActivity.this,"Database saved!",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this,ContactDetails.class);
+            startActivity(intent);
+        });
+
     }
     private void showSharedPreferences() {
         SharedPreferences pref = getApplicationContext().getSharedPreferences("myfile", Context.MODE_PRIVATE);

@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PersistenceDemo">
         <activity
+            android:name=".ContactDetails"
+            android:exported="true" />
+        <activity
             android:name=".AppSettings"
             android:exported="true" />
         <activity
