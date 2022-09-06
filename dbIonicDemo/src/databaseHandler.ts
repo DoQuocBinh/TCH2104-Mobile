@@ -3,18 +3,18 @@ import { Customer } from './models/Customer'
 
 const DATABASE_NAME = "CustomerDB"
 
-async function insertCustomer(customerInfo:Customer){
+export async function insertCustomer(customerInfo:Customer){
     const db = await openDB(DATABASE_NAME,1)
     const id = await db.put("customers",customerInfo)
     return id
 }
 
-async function getAllCustomers(){
+export async function getAllCustomers(){
     const db = await openDB(DATABASE_NAME,1)
     const result = await db.getAll("customers")
     return result
 }
-async function getCustomerById(id:number){
+export async function getCustomerById(id:number){
     const db = await openDB(DATABASE_NAME,1)
     return await db.get("customers",id)
 }
