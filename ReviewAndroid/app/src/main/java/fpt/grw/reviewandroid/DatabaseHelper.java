@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "Exams";
@@ -55,25 +58,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return database.insertOrThrow(DATABASE_NAME, null, rowValues);
     }
 
-    public String getDetails() {
-        Cursor results = database.query(DATABASE_NAME, new String[] {ID, NAME, EXAM_DATE, DESCRIPTION},
+    public List<Exam>  getExams() {
+        Cursor cursor = database.query(DATABASE_NAME, new String[] {ID, NAME, EXAM_DATE, DESCRIPTION},
                 null, null, null, null, NAME);
 
-        String resultText = "";
+        List<Exam> results = new ArrayList<Exam>();
 
-        results.moveToFirst();
-        while (!results.isAfterLast()) {
-            int id = results.getInt(0);
-            String name = results.getString(1);
-            String dob = results.getString(2);
-            String email = results.getString(3);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            int id = cursor.getInt(0);
+            String name = cursor.getString(1);
+            String exam_date = cursor.getString(2);
+            String description = cursor.getString(3);
 
-            resultText += id + " " + name + " " + dob + " " + email + "\n";
+            Exam exam = new Exam(id,name,exam_date,description);
+            results.add(exam);
 
-            results.moveToNext();
+            cursor.moveToNext();
         }
 
-        return resultText;
+        return results;
 
     }
 }

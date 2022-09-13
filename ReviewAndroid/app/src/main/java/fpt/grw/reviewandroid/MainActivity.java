@@ -3,10 +3,14 @@ package fpt.grw.reviewandroid;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,9 +35,13 @@ public class MainActivity extends AppCompatActivity {
 
         Button viewButton = findViewById(R.id.btnView);
         viewButton.setOnClickListener(view ->{
-            TextView tv = findViewById(R.id.textView);
             DatabaseHelper dbHelpler = new DatabaseHelper(this);
-            tv.setText(dbHelpler.getDetails());
+            List<Exam> exams = dbHelpler.getExams();
+
+            ArrayAdapter<Exam> arrayAdapter = new ArrayAdapter<Exam>(this,
+                            android.R.layout.simple_list_item_1,exams);
+            ListView examList = findViewById(R.id.examListView);
+            examList.setAdapter(arrayAdapter);
         });
 
     }
