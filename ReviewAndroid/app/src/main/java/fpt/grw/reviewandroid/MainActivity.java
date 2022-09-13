@@ -2,7 +2,10 @@ package fpt.grw.reviewandroid;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,7 +45,21 @@ public class MainActivity extends AppCompatActivity {
                             android.R.layout.simple_list_item_1,exams);
             ListView examList = findViewById(R.id.examListView);
             examList.setAdapter(arrayAdapter);
+
+            examList.setOnItemClickListener((adapterView, view1, i, l) -> {
+                Exam selectedExam = exams.get(i);
+                openExamDetail(selectedExam);
+            });
         });
 
+    }
+
+    private void openExamDetail(Exam selectedExam) {
+        Intent intent = new Intent(this,ExamDetails.class);
+        intent.putExtra("name",selectedExam.name);
+        intent.putExtra("id",selectedExam.id);
+        intent.putExtra("exam_date",selectedExam.exam_date);
+        intent.putExtra("description",selectedExam.description);
+        startActivity(intent);
     }
 }
