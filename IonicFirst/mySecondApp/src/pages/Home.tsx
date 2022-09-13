@@ -1,4 +1,4 @@
-import { IonButton, IonContent, IonDatetime, IonHeader, IonInput, IonItem, IonLabel, IonList, IonPage, IonPopover, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonContent, IonDatetime, IonHeader, IonInput, IonItem, IonLabel, IonList, IonPage, IonPopover, IonRouterLink, IonTitle, IonToolbar } from '@ionic/react';
 import { useState } from 'react';
 
 interface Product{
@@ -50,6 +50,7 @@ const Home: React.FC = () => {
               )}
           </IonList>
         }
+        <IonRouterLink routerLink='/setting'>go setting</IonRouterLink>
       </IonContent>
     </IonPage>
   );
