@@ -22,9 +22,7 @@ public class ExamDetails extends AppCompatActivity {
         String exam_date = intent.getStringExtra("exam_date");
 
         TextView inputName = findViewById(R.id.inputName2);
-        TextView inputExamDate = findViewById(R.id.inputExamDate2);
         inputName.setText(name);
-        inputExamDate.setText(exam_date);
 
         Button btnPrev = findViewById(R.id.btnPrev);
         btnPrev.setOnClickListener(view -> {

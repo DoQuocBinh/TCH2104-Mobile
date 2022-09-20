@@ -16,13 +16,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "Exams";
     private static final String TABLE_EXAM = "Exams";
+    private static final String TABLE_DETAILS= "ExamDetails";
 
     public static final String EXAM_ID = "exam_id";
     public static final String EXAM_NAME = "exam_name";
     public static final String EXAM_DATE = "exam_date";
     public static final String DESCRIPTION = "exam_description";
 
+
+    private static final String DETAIL_ID = "detail_id";
+    private static final String DETAIL_QUESTION = "detail_question";
+    private static final String DETAIL_PICTURE_URL = "detail_pic_url";
+
     private SQLiteDatabase database;
+
+    private static final String DETAIL_TABLE_CREATE = String.format(
+            "CREATE TABLE %s (" +
+                    "   %s INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "   %s INTEGER, " +
+                    "   %s TEXT, " +
+                    "   %s TEXT)",
+            TABLE_DETAILS, DETAIL_ID, EXAM_ID,DETAIL_QUESTION , DETAIL_PICTURE_URL);
 
     private static final String EXAM_TABLE_CREATE = String.format(
             "CREATE TABLE %s (" +
@@ -33,13 +47,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             TABLE_EXAM, EXAM_ID, EXAM_NAME, EXAM_DATE, DESCRIPTION);
 
     public DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, 2);
+        super(context, DATABASE_NAME, null, 3);
         database = getWritableDatabase();
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(EXAM_TABLE_CREATE);
+        db.execSQL(DETAIL_TABLE_CREATE);
     }
 
     @Override
