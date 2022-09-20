@@ -66,6 +66,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public long insertDetail(int examId,String question,String pictureURL){
+        ContentValues rowValues = new ContentValues();
+        rowValues.put(EXAM_ID,examId);
+        rowValues.put(DETAIL_QUESTION,question);
+        rowValues.put(DETAIL_PICTURE_URL,pictureURL);
+        return database.insertOrThrow(TABLE_DETAILS, null, rowValues);
+    }
+
     public long insertExam(String name, String exam_date, String description) {
         ContentValues rowValues = new ContentValues();
 

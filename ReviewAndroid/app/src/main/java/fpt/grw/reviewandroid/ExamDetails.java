@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ExamDetails extends AppCompatActivity {
     ProgressDialog progressDlg;
@@ -31,6 +32,20 @@ public class ExamDetails extends AppCompatActivity {
             ImageView imageView = findViewById(R.id.imageView);
             DownloadImageTask task = new DownloadImageTask(progressDlg,this,imageView);
             task.execute(inputURL.getText().toString());
+
+        });
+
+        Button btnInsert = findViewById(R.id.btnInsert);
+        btnInsert.setOnClickListener(view -> {
+            int exam_id = intent.getIntExtra("id",0);
+            EditText inputURL = findViewById(R.id.inputPictureURL);
+            EditText inputQuestion = findViewById(R.id.inputExamQuestion);
+
+            DatabaseHelper dbHelper = new DatabaseHelper(this);
+            long detail_id = dbHelper.insertDetail(exam_id,inputQuestion.getText().toString(),
+                    inputURL.getText().toString());
+
+            Toast.makeText(this, String.valueOf(detail_id), Toast.LENGTH_SHORT).show();
 
         });
     }
