@@ -1,10 +1,10 @@
 package entities;
 
-public class ExamDetailsEntity {
+public class DetailsEntity {
     private int detailId;
     private int examId;
 
-    public ExamDetailsEntity(int detailId, int examId, String question, String pictureURL) {
+    public DetailsEntity(int detailId, int examId, String question, String pictureURL) {
         this.detailId = detailId;
         this.examId = examId;
         this.question = question;

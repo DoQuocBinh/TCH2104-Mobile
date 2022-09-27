@@ -5,11 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.List;
+
+import entities.ExamDetailEntity;
 
 public class ExamDetails extends AppCompatActivity {
     ProgressDialog progressDlg;
@@ -46,6 +52,19 @@ public class ExamDetails extends AppCompatActivity {
                     inputURL.getText().toString());
 
             Toast.makeText(this, String.valueOf(detail_id), Toast.LENGTH_SHORT).show();
+
+        });
+        Button btnViewAll = findViewById(R.id.btnViewAll);
+        btnViewAll.setOnClickListener(view -> {
+            DatabaseHelper dbHelper = new DatabaseHelper(this);
+
+            int examId = intent.getIntExtra("id",0);
+            List<ExamDetailEntity> exam_details = dbHelper.getExamDetails(examId);
+            ArrayAdapter<ExamDetailEntity> adapter = new ArrayAdapter<ExamDetailEntity>
+                        (this, android.R.layout.simple_list_item_1,exam_details);
+
+            ListView listView = findViewById(R.id.exam_detail_listview);
+            listView.setAdapter(adapter);
 
         });
     }

@@ -2,18 +2,18 @@ package entities;
 
 import androidx.annotation.NonNull;
 
-public class Exam {
+public class ExamEntity {
     protected int id;
     protected String name;
 
-    public Exam(int id, String name, String exam_date, String description) {
+    public ExamEntity(int id, String name, String exam_date, String description) {
         this.id = id;
         this.name = name;
         this.exam_date = exam_date;
         this.description = description;
     }
 
-    public Exam() {
+    public ExamEntity() {
     }
 
     @NonNull

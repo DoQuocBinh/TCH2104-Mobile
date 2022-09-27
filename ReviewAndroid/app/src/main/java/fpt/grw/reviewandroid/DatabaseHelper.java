@@ -10,7 +10,8 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import entities.Exam;
+import entities.ExamDetailEntity;
+import entities.ExamEntity;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -47,7 +48,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             TABLE_EXAM, EXAM_ID, EXAM_NAME, EXAM_DATE, DESCRIPTION);
 
     public DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, 3);
+        super(context, DATABASE_NAME, null, 7);
         database = getWritableDatabase();
     }
 
@@ -60,6 +61,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_EXAM);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_DETAILS);
 
         Log.v(this.getClass().getName(), DATABASE_NAME + " database upgrade to version " +
                 newVersion + " - old data lost");
@@ -84,11 +86,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return database.insertOrThrow(TABLE_EXAM, null, rowValues);
     }
 
-    public List<Exam>  getExams() {
+    public List<ExamDetailEntity>  getExamDetails(int examId) {
+        String MY_QUERY = "SELECT b.detail_id, b.exam_id, a.exam_name,b.detail_pic_url, b.detail_question FROM "+ TABLE_EXAM+ " a INNER JOIN "+
+                TABLE_DETAILS + " b ON a.exam_id=b.exam_id WHERE a.exam_id=?";
+        Cursor cursor = database.rawQuery(MY_QUERY,new String[]{String.valueOf(examId)});
+
+
+        List<ExamDetailEntity> results = new ArrayList<ExamDetailEntity>();
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            int detail_id = cursor.getInt(0);
+            int exam_id = cursor.getInt(1);
+            String exam_name = cursor.getString(2);
+            String detail_picture_url = cursor.getString(3);
+            String detail_question = cursor.getString(4);
+
+            ExamDetailEntity examDetailEntity = new ExamDetailEntity();
+            examDetailEntity.setDetail_id(detail_id);
+            examDetailEntity.setExam_id(exam_id);
+            examDetailEntity.setExam_name(exam_name);
+            examDetailEntity.setDetail_picture_url(detail_picture_url);
+            examDetailEntity.setDetail_question(detail_question);
+            results.add(examDetailEntity);
+
+            cursor.moveToNext();
+        }
+        return results;
+    }
+
+    public List<ExamEntity>  getExams() {
         Cursor cursor = database.query(TABLE_EXAM, new String[] {EXAM_ID, EXAM_NAME, EXAM_DATE, DESCRIPTION},
                 null, null, null, null, EXAM_NAME);
 
-        List<Exam> results = new ArrayList<Exam>();
+        List<ExamEntity> results = new ArrayList<ExamEntity>();
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -97,13 +128,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             String exam_date = cursor.getString(2);
             String description = cursor.getString(3);
 
-            Exam exam = new Exam(id,name,exam_date,description);
-            results.add(exam);
+            ExamEntity examEntity = new ExamEntity(id,name,exam_date,description);
+            results.add(examEntity);
 
             cursor.moveToNext();
         }
-
         return results;
-
     }
+
 }
