@@ -60,8 +60,7 @@ public class ExamDetails extends AppCompatActivity {
 
             int examId = intent.getIntExtra("id",0);
             List<ExamDetailEntity> exam_details = dbHelper.getExamDetails(examId);
-            ArrayAdapter<ExamDetailEntity> adapter = new ArrayAdapter<ExamDetailEntity>
-                        (this, android.R.layout.simple_list_item_1,exam_details);
+            MyCustomAdapter adapter = new MyCustomAdapter(this,exam_details);
 
             ListView listView = findViewById(R.id.exam_detail_listview);
             listView.setAdapter(adapter);
