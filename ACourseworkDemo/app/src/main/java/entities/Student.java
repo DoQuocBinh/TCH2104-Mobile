@@ -1,5 +1,7 @@
 package entities;
 
+import androidx.annotation.NonNull;
+
 public class Student {
     private String name;
     private int age;
@@ -9,6 +11,12 @@ public class Student {
         this.name = name;
         this.age = age;
         this.studentId =studentId;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return name + " - " +   age;
     }
 
     public int getStudentId() {
@@ -34,4 +42,5 @@ public class Student {
     public void setAge(int age) {
         this.age = age;
     }
+
 }

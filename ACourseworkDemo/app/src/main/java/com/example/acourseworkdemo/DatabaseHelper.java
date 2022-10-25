@@ -2,9 +2,15 @@ package com.example.acourseworkdemo;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import entities.Student;
 
 public class DatabaseHelper extends SQLiteOpenHelper
 
@@ -44,6 +50,27 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
         return database.insertOrThrow(TABLE_STUDENT, null, rowValues);
     }
+    public List<Student> getStudents() {
+        Cursor cursor = database.query(TABLE_STUDENT, new String[] {STUDENT_ID, STUDENT_NAME, STUDENT_AGE},
+                null, null, null, null, STUDENT_AGE);
+
+        List<Student> results = new ArrayList<Student>();
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            int id = cursor.getInt(0);
+            String name = cursor.getString(1);
+            int age = cursor.getInt(2);
+
+
+            Student examEntity = new Student(name,age,id);
+            results.add(examEntity);
+
+            cursor.moveToNext();
+        }
+        return results;
+    }
+
 
 
     @Override
